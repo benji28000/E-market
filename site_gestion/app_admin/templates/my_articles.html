@@ -1,0 +1,89 @@
+{% extends 'partials/base.html' %}
+{%block title %} Mes articles {%endblock%}
+{% block content %}
+<div class="container">
+    <div class="row" >
+        <div class="col-md-12">
+            <h1>Articles en vente</h1>
+        </div>
+        <div class="col-md-12">
+            <a href="{% url 'ajouter-article' %}" class="btn btn-primary " style="float: right;"><i class="fas fa-plus"></i> Ajouter un article</a>
+
+        </div>
+        <div class="col-md-12">
+
+
+
+            
+            {% if liste_articles or liste_not_articles %}
+            <div class="card">
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr class="h6">
+                                <th>
+                                    Titre
+                                </th>
+                                <th>
+                                    Prix unitaire
+                                </th>
+                                <th>
+                                    Action
+                                </th>
+                                <th>
+                                    utilisateur
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                {% for articles in liste_articles %}
+                                <tr>
+                                    <td><a href="{% url 'detail' articles.id %}" >{{articles.title}} ({{articles.quantité}}) </a></td>
+                                    <td>
+                                        <p>le prix unitaire de l'article est : {{articles.prix}} €</p>
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'update-article' articles.id %}" class="btn btn-info"><i class="fas fa-edit"></i></a>
+                                        <a href="{% url 'delete-article' articles.id %}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+
+
+                                    </td>
+                                    <td>
+                                        {{user}}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                {% for article in liste_not_articles %}
+                                <tr>
+                                    <td><a href="{% url 'detail' article.id %}" >{{article.title}}  ({{article.quantité}})</a></td>
+                                    <td>
+                                       <p>le prix unitaire de l'article est : {{article.prix}}</p> 
+                                    </td>
+                                    <td>
+                                        <p>Non modifiable</p>
+
+
+                                    </td>
+                                    <td>
+                                        {{article.user}}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            {% else %}
+            <h3>Il n'y a actuellement aucun article en vente sur notre site.</h3>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
