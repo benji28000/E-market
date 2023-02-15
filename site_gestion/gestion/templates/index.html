@@ -1,0 +1,74 @@
+{% load static %}
+{% include 'head.html' %}
+<link rel="stylesheet" href="{% static 'style.css' %}">
+  <body>
+    <header>
+      {% include 'nav.html' %}
+    </header>
+    <main>
+      {% if user.is_authenticated %}
+      <p class="nav-item" style="margin-right: 5px;"> Connected as : {{user.username}}</p>
+      {% endif %}
+      <h1 class="titre-image">E-market : Le site e-commerce fictif crée par Benjamin Perez</h1>
+      <section class="top-page">
+      </section>
+      <div class="container mt-5 ">
+        <section>
+          <h2><i class="fa-solid fa-list-check"></i>  Organisation du site et explications</h2>
+          <hr>
+          <p>Ce site est mon premier site avec Django afin de me former à ce Framework. Sur ce site tout d'abord sont affiché tous les produits crées par les différents utilisateurs. Ensuite sur la page admin il y a la gestion de tout les articles par le compte admin(le mien). Ensuite on peut se connecter ou s'inscrire et accèder à son compte avec l'onglet "Mon Compte".</p>
+          <br>
+          <p>Dans la page Mon compte on retrouve la page d'accueil de l'utilisateur ensuite on a une gestion des articles pour chaque utilisateur(ajout,modification,suppression).</p>
+          <p>De plus dans l'onglet panier sont récupérés tous les articles ajoutés au panier par l'utilisateur via le boutton ajouter panier dans la page de detail de chaque produit. On peut ajouter et retirer des articles de son panier ainsi que créer une facture sous le format pdf.</p>
+        </section>
+
+      </div>
+      <section class="articles_vente">
+        <div class="container">
+          <h2 class="p-2"><i class="fa-solid fa-cart-shopping"></i>  Nos articles en Vente</h2>
+          <div class="card" id="block-card">
+            <div class="card-body">
+              <div class="row">
+                <div class="cards-position">
+                  {% for article in list_articles%}
+                  <div class="card col-12 col-md-6 col-lg-3 col-xl-3">
+      
+                      <img class="card-img-top" src="{{ article.image.url }}" alt="image_card"></img>
+                  
+                      <div class="card-body">
+      
+                          <h4 class="card-title"><a href="{% url 'detail' article.id %}"> {{article.title}} </a></h4>
+                          <p class="card-text">Le prix est de : {{article.prix}} €</p>
+                          <p class="card-text"> Publié il y a {{article.created_at|timesince}} par l'utilisateur : {{article.user}} </p>
+                          <p>il reste {{article.quantité}} en stock</p>
+                          <a href="{% url 'detail' article.id %}" class="btn btn-primary">Lire la suite</a>
+                      </div>
+                  </div>
+                  {%endfor%}
+    
+                </div>
+              </div>
+  
+  
+            </div>
+  
+          </div>
+    
+        </div>
+
+      </section>
+
+
+    </main>
+    <footer>
+      {% include 'footer.html' %}
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+  </body>
+</html>
+
+
+
+
+
