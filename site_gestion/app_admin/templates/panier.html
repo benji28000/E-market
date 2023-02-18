@@ -21,47 +21,37 @@
                   </tr>
               </thead>
               <tbody>
-                  <tr>
-                    {% if achats %}
-                      {% for achat in achats %}
-                        <tr>
-                            <td><a href="{% url 'detail' achat.article.id %}" >{{ achat.article.title }} ({{ achat.quantité_achat }})</a></td>
-                            <td>
-                              {{ achat.article.prix }} €
-                            </td>
-                            <td>
-                              <a href="{% url 'incrementer_achat' achat.id %}" class="btn btn-info"><i class="fas fa-plus"></i></a>
-                                <a href="{% url 'decrementer_achat' achat.id %}" class="btn btn-danger"><i class="fas fa-minus"></i></a>
-  
-  
-                            </td>
-                        </tr>
-                      {% endfor %}
-                        <tr>
-                            <td>Le total à payer pour {{ achats|total_articles }} articles</a></td>
-                            <td>
-                                <p> {{ achats|total_price }} €</p>
-  
-  
-                            </td>
-                            <td>
-                              <a href="{% url 'generate-pdf' %}" target="_blank" class="btn btn-primary">Télécharger la facture</a>
-                              
-                            </td>
-                        </tr>
-                      
-  
-  
+                {% if achats %}
+                  {% for achat in achats %}
+                    <tr>
+                      <td><a href="{% url 'detail' achat.article.id %}" >{{ achat.article.title }} ({{ achat.quantité_achat }})</a></td>
+                      <td>
+                        {{ achat.article.prix }} €
+                      </td>
+                      <td>
+                        <a href="{% url 'incrementer_achat' achat.id %}" class="btn btn-info"><i class="fas fa-plus"></i></a>
+                        <a href="{% url 'decrementer_achat' achat.id %}" class="btn btn-danger"><i class="fas fa-minus"></i></a>
+                      </td>
                     </tr>
-                </tbody>
-            </table>
+                  {% endfor %}
+                  <tr>
+                    <td>Le total à payer pour {{ achats|total_articles }} articles</a></td>
+                    <td>
+                      <p> {{ achats|total_price }} €</p>
+                    </td>
+                    <td>
+                      <a href="{% url 'generate-pdf' %}" target="_blank" class="btn btn-primary">Télécharger la facture</a>
+                    </td>
+                  </tr>
+                {% else %}
+                  <tr>
+                    <td colspan="3">Votre panier est vide.</td>
+                  </tr>
+                {% endif %}
+            </tbody>
+          </table>
         </div>
       </div>
-      {% else %}
-        <p>Votre panier est vide.</p>
-      {% endif %}
       Pas de systeme d'achat car c'est un site fictif
-
   </div>
-
-  {% endblock %}
+{% endblock %}
